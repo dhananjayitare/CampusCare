@@ -1,0 +1,344 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+body {
+  background: radial-gradient(circle at 20% 20%, #0f2f25 0%, #071018 40%, #050b12 100%);
+  padding: 30px;
+  color: #e6f1f5;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.logout-btn {
+  padding: 8px 18px;
+  border-radius: 30px;
+  border: 1px solid rgba(0,255,150,0.3);
+  background: rgba(0,255,150,0.08);
+  color: #00ff9c;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: rgba(0,255,150,0.2);
+  box-shadow: 0 0 15px rgba(0,255,150,0.4);
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 8px 20px;
+  border-radius: 25px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #9ca3af;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.tab.active {
+  background: linear-gradient(90deg, #00ff9c, #00c76f);
+  color: #001a12;
+  font-weight: 600;
+  box-shadow: 0 0 15px rgba(0,255,150,0.5);
+}
+
+/* Glass Card */
+.card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(0,255,150,0.05);
+}
+
+/* Complaint Item */
+.complaint-item {
+  position: relative;
+  padding: 18px 20px 60px 20px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(10px);
+  transition: 0.3s;
+}
+
+.complaint-item:hover {
+  border: 1px solid rgba(0,255,150,0.4);
+  box-shadow: 0 0 25px rgba(0,255,150,0.2);
+}
+
+.sub {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.desc {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #d1d5db;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Badge */
+.badge {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  padding: 5px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  text-transform: capitalize;
+  background: rgba(0,255,150,0.15);
+  color: #00ff9c;
+  border: 1px solid rgba(0,255,150,0.3);
+}
+
+/* Buttons */
+.complaint-item button {
+  position: absolute;
+  bottom: 15px;
+  padding: 7px 14px;
+  font-size: 12px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Complete Button */
+.complete-btn {
+  right: 120px;
+  background: linear-gradient(90deg,#00ff9c,#00c76f);
+  color: #001a12;
+  font-weight: 600;
+}
+
+.complete-btn:hover {
+  box-shadow: 0 0 15px rgba(0,255,150,0.6);
+}
+
+/* Delete Button */
+.delete-btn {
+  right: 20px;
+  background: rgba(255,0,0,0.15);
+  color: #ff4d4d;
+  border: 1px solid rgba(255,0,0,0.3);
+}
+
+.delete-btn:hover {
+  box-shadow: 0 0 12px rgba(255,0,0,0.5);
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th {
+  text-align: left;
+  padding: 14px;
+  font-size: 13px;
+  background: rgba(255,255,255,0.05);
+  color: #9ca3af;
+}
+
+td {
+  padding: 14px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Role badges */
+.role {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.student {
+  background: rgba(0,200,255,0.15);
+  color: #00c8ff;
+}
+
+.admin {
+  background: rgba(180,0,255,0.15);
+  color: #b400ff;
+}
+
+.maintenance {
+  background: rgba(255,180,0,0.15);
+  color: #ffb400;
+}
+
+/* Summary cards */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.summary-cards .card {
+  text-align: center;
+  padding: 25px;
+  border-radius: 18px;
+  background: linear-gradient(145deg,#071018,#0d1f29);
+  border: 1px solid rgba(0,255,150,0.2);
+  transition: 0.3s;
+}
+
+.summary-cards .card:hover {
+  box-shadow: 0 0 25px rgba(0,255,150,0.4);
+  transform: translateY(-5px);
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+    width:100%;
+    padding:20px 80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(7,16,24,0.8);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    border-bottom:1px solid #1e293b;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #00ff9c;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #9ca3af;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.nav-links li a:hover {
+  color: #00ff9c;
+}
+
+.auth-links .btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #00ff9c;
+  color: #001a12;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.auth-links .btn:hover {
+  box-shadow: 0 0 15px rgba(0,255,150,0.6);
+}
+
+.btn {
+  padding: 8px 18px;
+  border: 1px solid #22c55e;
+  border-radius: 6px;
+}
+
+.btn:hover {
+  background: #22c55e;
+  color: #0f172a;
+}
+
+.back-btn {
+  text-decoration: none;
+  font-size: 14px;
+  color: #00ff9c;
+  transition: 0.3s;
+}
+
+.back-btn:hover {
+  text-decoration: underline;
+}
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .nav-links {
+    display: none; /* Simple version for now */
+  }
+}
+
+.btn {
+  padding: 8px 18px;
+  border: 1px solid #22c55e;
+  border-radius: 6px;
+}
+
+.btn:hover {
+  background: #22c55e;
+  color: #0f172a;
+}
+
+.section {
+  display: none;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.active-section {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.delete-icon{
+  color:red;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.delete-icon:hover{
+  color:darkred;
+  transform:scale(1.2);
+}

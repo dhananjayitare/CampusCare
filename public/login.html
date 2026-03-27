@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMMS - Login</title>
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+  <div class="logo">CampusCare</div>
+
+  
+  <div class="auth-links">
+    <a href="/home.html" class="back-btn">← Back to Home</a>
+    
+    <a href="/register.html" class="btn">Register</a>
+  </div>
+</nav>
+    
+
+  <!-- Main Section -->
+  <div class="main">
+
+
+    <!-- Left Side -->
+    <div class="left">
+      <p class="small-title">College Maintenance Management</p>
+      <h1>Report & Track Campus<br>Issues Seamlessly</h1>
+      <p class="description">
+        A comprehensive system for students, teachers, and maintenance
+        teams to manage facility complaints efficiently.
+      </p>
+
+      <div class="features">
+        <div class="feature">
+          <h4>Easy Reporting</h4>
+          <p>Submit complaints with detailed information and images</p>
+        </div>
+
+        <div class="feature">
+          <h4>Real-time Tracking</h4>
+          <p>Monitor complaint status from submission to completion</p>
+        </div>
+
+        <div class="feature">
+          <h4>Role-based Access</h4>
+          <p>Separate dashboards for students, admin, and maintenance</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Login Card -->
+    <div class="right">
+      <div class="login-card">
+        <h2>Welcome to campuscare</h2>
+        <p class="login-sub">Sign in to access your dashboard</p>
+
+        <form action="/login" method="POST">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="Enter your email" required>
+
+          <label>Password</label>
+          <input type="password" name="password" placeholder="Enter your password" required>
+
+          <button type="submit">Sign In →</button>
+        </form>
+
+        <p class="register-link">
+          Don't have an account?
+          <a href="/register.html">Register here</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+<script>
+  req.session.userEmail = user.email;
+</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submit Complaint</title>
+  <link rel="stylesheet" href="css/complaint.css">
+</head>
+
+<nav class="navbar">
+  <div class="logo">CampusCare</div>
+
+
+
+
+  <div class="auth-links">
+  <a href="/dashboard" class="back-btn">← Back to Dashboard</a>
+  </div>
+</nav>
+
+<body>
+
+<div class="page-wrapper">
+
+  <!-- Header -->
+  <div class="page-header">
+    <h1>Submit Complaint</h1>
+    
+  </div>
+
+  <!-- Complaint Card -->
+  <div class="card">
+    <form id="complaintForm" enctype="multipart/form-data">
+
+      <div class="form-group">
+        <label>Complaint Title</label>
+        <input type="text" name="title"
+          placeholder="Eg. Plumbing, Cleaning, Electrical issue"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description"
+          placeholder="Building name, floor number, room number, exact issue..."
+          required></textarea>
+      </div>
+
+ 
+
+      <button type="submit" class="primary-btn">Submit Complaint</button>
+
+    </form>
+  </div>
+
+</div>
+
+<script>
+document.getElementById("complaintForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const title = this.title.value;
+  const description = this.description.value;
+
+  fetch("/submit-complaint", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ title, description })
+  })
+  .then(res => res.json())
+  .then(data => {
+    alert(data.message);
+    this.reset();
+  })
+  .catch(err => {
+    alert("Server error ❌");
+  });
+});
+</script>
+
+</body>
+</html>

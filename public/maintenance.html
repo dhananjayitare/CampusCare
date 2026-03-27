@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance Dashboard</title>
+  <link rel="stylesheet" href="css/maintenance.css">
+</head>
+<nav class="navbar">
+  <div class="logo">CampusCare</div>
+
+
+
+  <div class="auth-links">
+      <a href="/home.html" class="back-btn"><--Back To Home </a>
+  </div>
+</nav>
+<body>
+
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h1>Maintenance Dashboard</h1>
+      <h1 id="welcomeText">Welcome</h1>
+    </div>
+  
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="summary">
+  <div class="card">
+    <p>New Tasks</p>
+    <h2 id="totalComplaints">0</h2>
+  </div>
+
+  <div class="card">
+    <p>In Progress</p>
+    <h2 id="inProgressComplaints">0</h2>
+  </div>
+
+  <div class="card">
+    <p>Completed</p>
+    <h2 id="completedComplaints" class="green">0</h2>
+  </div>
+</div>
+
+  <!-- Assigned Complaints Section -->
+  <div class="complaints-section">
+    <h2>Assigned Complaints</h2>
+    <p class="sub-text">View and update complaint status</p>
+
+    <div id="complaintContainer"></div>
+  </div>
+
+</div>
+
+<script>
+async function loadMaintenanceComplaints() {
+  const res = await fetch("/maintenance/complaints");
+  const complaints = await res.json();
+
+  const container = document.getElementById("complaintContainer");
+  container.innerHTML = "";
+  
+complaints.forEach(c => {
+
+  let statusText = c.status.trim().toLowerCase();
+
+  let actionButton = "";
+
+  if (statusText === "completed" || statusText === "task is completed") {
+
+    actionButton = `
+      <p style="color:#00ff88; font-weight:bold;">
+        Task is Completed ✅
+      </p>
+    `;
+
+  } else {
+
+    actionButton = `
+      <button onclick="markCompleted(${c.id})">
+        Mark as Completed
+      </button>
+    `;
+  }
+
+  container.innerHTML += `
+    <div class="complaint-card">
+      <h3>${c.title}</h3>
+      <p>${c.description}</p>
+      <p>Status: ${c.status}</p>
+      ${actionButton}
+    </div>
+  `;
+});
+  const total = complaints.length;
+  const inProgress = complaints.filter(c => 
+    c.status.toLowerCase() === "in progress"
+  ).length;
+
+  const completed = complaints.filter(c => 
+    c.status.toLowerCase() === "completed"
+  ).length;
+
+  document.getElementById("totalComplaints").innerText = total;
+  document.getElementById("inProgressComplaints").innerText = inProgress;
+  document.getElementById("completedComplaints").innerText = completed;
+}
+
+async function markCompleted(id) {
+  const res = await fetch(`/complete-complaint/${id}`, {
+    method: "PUT"
+  });
+
+  const data = await res.json();
+  alert(data.message);
+
+ 
+}
+
+async function loadUser() {
+  const res = await fetch("/current-user");
+  const user = await res.json();
+
+  document.getElementById("welcomeText").innerText =
+    `Welcome ${user.name} (ID: ${user.id})`;
+}
+
+
+loadUser();
+loadMaintenanceComplaints();
+</script>
+
+</body>
+</html>

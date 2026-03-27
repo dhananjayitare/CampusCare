@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+  <div class="logo">CampusCare</div>
+
+  
+  
+  <div class="auth-links">
+   <a href="/change-pass.html" class="back-btn">Change Password</a>
+    
+  </div>
+</nav>
+
+
+<div class="dashboard">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+    
+      <h2>Welcome, <span id="userName"></span></h2>
+    </div>
+    <a href="/logout" class="logout-btn">Logout</a>
+  </div>
+
+  
+
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="card">
+      <p>Total Complaints</p>
+      <h2 id="totalComplaints">0</h2>
+    </div>
+
+    <div class="card">
+      <p>Pending complaints</p>
+      <h2 id="pendingComplaints">0</h2>
+    </div>
+
+    <div class="card">
+      <p>In Progress</p>
+      <h2 id="inProgressComplaints">0</h2>
+    </div>
+
+    <div class="card">
+      <p>problem Completed</p>
+      <h2 id="completedComplaints">0</h2>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  
+  <button class="sub-button" onclick="goToComplaint()">Submit New Complaint +</button> 
+  
+
+  <!-- Complaints Table -->
+  <div class="complaints">
+    <h2>All Complaints History</h2>
+    <table id="complaintHistory">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Student Name</th>
+          <th>Complaint</th>
+          <th>Status</th>
+          <th>Submitted At</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+</div>
+<script>
+function goToComplaint() {
+  window.location.href = "/complaint.html"; 
+}
+
+// 1️⃣ Fetch logged-in student's complaints and update table
+async function loadMyComplaints() {
+  try {
+    const res = await fetch("/api/my-complaints");
+    const complaints = await res.json();
+
+    const tbody = document.querySelector("#complaintHistory tbody");
+    tbody.innerHTML = "";
+
+    complaints.forEach((c, i) => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>${c.title}</td>
+          <td>${c.description}</td>
+          <td>${c.status}</td>
+          <td>${new Date(c.created_at).toLocaleString()}</td>
+        </tr>
+      `;
+    });
+
+    // 2️⃣ Update summary cards
+    updateStudentSummary(complaints);
+
+  } catch(err) {
+    console.log("Error loading complaints:", err);
+  }
+}
+
+// Update student summary cards
+function updateStudentSummary(complaints) {
+  const total = complaints.length;
+  const pending = complaints.filter(c => c.status.toLowerCase() === "pending").length;
+  const inProgress = complaints.filter(c => c.status.toLowerCase() === "in progress").length;
+  const completed = complaints.filter(c => c.status.toLowerCase() === "completed").length;
+
+  document.getElementById("totalComplaints").innerText = total;
+  document.getElementById("pendingComplaints").innerText = pending;
+  document.getElementById("inProgressComplaints").innerText = inProgress;
+  document.getElementById("completedComplaints").innerText = completed;
+}
+
+
+// 1️⃣ Show user name
+fetch("/get-user")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("userName").innerText = data.name;
+  })
+  .catch(() => window.location.href = "/login.html");
+
+// Initial load
+loadMyComplaints();
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+}
+
+/* Background */
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 20%, #0f2f25 0%, #071018 50%, #050b12 100%);
+  color: #e6f1f5;
+}
+
+/* Page wrapper */
+.page {
+  width: 100%;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Back link */
+.top-link {
+  width: 700px;
+  margin-bottom: 25px;
+}
+
+.top-link a {
+  text-decoration: none;
+  color: #00ff9c;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.top-link a:hover {
+  text-shadow: 0 0 8px rgba(0,255,150,0.8);
+}
+
+/* Card */
+.card {
+  width: 700px;
+  padding: 45px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 0 40px rgba(0,255,150,0.08);
+  transition: 0.3s;
+}
+
+.card:hover {
+  border: 1px solid rgba(0,255,150,0.4);
+  box-shadow: 0 0 40px rgba(0,255,150,0.2);
+}
+
+/* Heading */
+.card h2 {
+  font-size: 26px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-bottom: 35px;
+}
+
+/* Grid layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+/* Form group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+/* Inputs */
+input,
+select {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
+  color: #ffffff;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #00ff9c;
+  box-shadow: 0 0 0 2px rgba(0,255,150,0.25);
+  outline: none;
+}
+
+/* Placeholder color */
+input::placeholder {
+  color: #6b7280;
+}
+
+/* Full width button */
+.full-width {
+  grid-column: span 2;
+  margin-top: 15px;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background: linear-gradient(90deg,#00ff9c,#00c76f);
+  color: #001a12;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  box-shadow: 0 0 20px rgba(0,255,150,0.6);
+  transform: scale(1.03);
+}
+
+/* ===== Select Fix ===== */
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: #ffffff;
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+}
+
+/* Dropdown options color */
+select option {
+  background: #0f1720;
+  color: #ffffff;
+}
+
+/* Focus effect */
+select:focus {
+  border-color: #00ff9c;
+  box-shadow: 0 0 0 2px rgba(0,255,150,0.25);
+  outline: none;
+}
+
+/* ===== NAVBAR ===== */
+.navbar{
+    width:100%;
+    padding:20px 80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(7,16,24,0.8);
+    backdrop-filter:blur(10px);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    border-bottom:1px solid #1e293b;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 600;
+  color: #00ff9c;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #9ca3af;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.nav-links li a:hover {
+  color: #00ff9c;
+}
+
+.auth-links .btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  background: #00ff9c;
+  color: #001a12;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.auth-links .btn:hover {
+  box-shadow: 0 0 15px rgba(0,255,150,0.6);
+}
+
+.btn {
+  padding: 8px 18px;
+  border: 1px solid #22c55e;
+  border-radius: 6px;
+}
+
+.btn:hover {
+  background: #22c55e;
+  color: #0f172a;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .nav-links {
+    display: none; /* Simple version for now */
+  }
+}
+
+.btn {
+  padding: 8px 18px;
+  border: 1px solid #22c55e;
+  border-radius: 6px;
+}
+
+.btn:hover {
+  background: #22c55e;
+  color: #0f172a;
+}

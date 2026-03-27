@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CampusCare | Smart Complaint System</title>
+<link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+    <div class="loader-circle"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+    <div class="logo">CampusCare</div>
+    <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="login.html" class="btn">Login</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Smart Campus Complaint System</h1>
+        <p>Submit, Track and Resolve complaints easily with transparency.</p>
+        <a href="login.html" class="btn">Get Started</a>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+    <h2>Our Features</h2>
+    <div class="why-container">
+        <div class="why-card">
+            <h3>Easy Complaint</h3>
+            <p>Students can register complaints easily online.</p>
+        </div>
+        <div class="why-card">
+            <h3>Live Tracking</h3>
+            <p>Track complaint status in real time.</p>
+        </div>
+        <div class="why-card">
+            <h3>Admin Dashboard</h3>
+            <p>Admins manage and update complaint status efficiently.</p>
+        </div>
+    </div>
+</section>
+
+<!-- STATS -->
+<section class="section light-bg">
+    <h2>Our Impact</h2>
+    <div class="stats">
+        <div class="stat-box">
+            <h3>500+</h3>
+            <p>Complaints Resolved</p>
+        </div>
+        <div class="stat-box">
+            <h3>300+</h3>
+            <p>Active Users</p>
+        </div>
+        <div class="stat-box">
+            <h3>98%</h3>
+            <p>Success Rate</p>
+        </div>
+        <div class="stat-box">
+            <h3>24hr</h3>
+            <p>Avg Resolution Time</p>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="section">
+    <h2>What Users Say</h2>
+    <div class="testimonial active">
+        <p>"The system made complaint tracking very easy."</p>
+    </div>
+    <div class="testimonial">
+        <p>"Admin management became much more organized."</p>
+    </div>
+     <div class="testimonial">
+        <p>"This project successfully manages complaints between students, admin, and maintenance staff in a simple and efficient way."</p>
+    </div>
+     <div class="testimonial">
+        <p>"Overall, the system is user-friendly, functional, and helpful for managing campus maintenance issues.”</p>
+    </div>
+     <div class="testimonial">
+        <p>“It improves communication between users and maintenance teams through a centralized dashboard.”</p>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2>Ready to Transform Your Campus?</h2>
+    <a href="register.html" class="btn">Register Now</a>
+</section>
+
+<footer class="footer">
+    © 2026 CampusCare | Developed by Dhananjay Itare
+</footer>
+
+<!-- JS -->
+<script>
+window.addEventListener("load", function(){
+    document.getElementById("loader").style.display="none";
+});
+
+let index = 0;
+const testimonials = document.querySelectorAll('.testimonial');
+
+setInterval(()=>{
+    testimonials.forEach(t=>t.classList.remove('active'));
+    testimonials[index].classList.add('active');
+    index = (index+1)%testimonials.length;
+},3000);
+</script>
+
+</body>
+</html>

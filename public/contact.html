@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Campus Care</title>
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+    <div class="logo">CampusCare</div>
+    <ul class="nav-links">
+        <li><a href="/home.html">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a href="/contact.html" class="active">Contact</a></li>
+        <li><a href="/login.html" class="btn">Login</a></li>
+    </ul>
+</nav>
+
+<!-- ===== CONTACT SECTION ===== -->
+<section class="contact-section">
+
+    <div class="contact-left">
+        <h1>Get in Touch</h1>
+        <p>
+            Have questions or facing any issue?  
+            Our support team is ready to help you.
+        </p>
+
+        <div class="info-box">
+            <h4>Email</h4>
+            <p>support@campuscare.com</p>
+        </div>
+
+        <div class="info-box">
+            <h4>Phone</h4>
+            <p>+91 7083333641</p>
+        </div>
+
+        <div class="info-box">
+            <h4>Address</h4>
+            <p>College Campus, Kolhapur</p>
+        </div>
+    </div>
+
+    <!-- ===== CONTACT FORM ===== -->
+   <form id="contactForm">
+    <label>Full Name</label>
+    <input type="text" name="name" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Message</label>
+    <textarea name="message" required></textarea>
+
+    <button type="submit">Send Message</button>
+</form>
+
+<!-- Popup -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <p id="popupText"></p>
+        <button onclick="closePopup()">OK</button>
+    </div>
+</div>
+    </div>
+
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    © 2026 CampusCare | Developed by Dhananjay Itare
+</footer>
+
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+
+    const res = await fetch("/contact-message", {
+        method: "POST",
+        body: new URLSearchParams(formData)
+    });
+
+    const data = await res.json();
+
+    document.getElementById("popupText").innerText = data.message;
+    document.getElementById("popup").style.display = "flex";
+
+    if (data.success) {
+        this.reset();
+    }
+});
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+</script>
+</body>
+</html>

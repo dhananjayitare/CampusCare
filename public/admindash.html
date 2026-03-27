@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="./css/admindash.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<nav class="navbar">
+  <div class="logo">CampusCare</div>
+
+
+
+  <div class="auth-links">
+    <a href="/home.html" class="back-btn">← Back to Home</a>
+    <a href="/login.html" class="btn">Log out</a>
+    
+  </div>
+</nav>
+
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <h2>Welcome, <span id="adminName"></span></h2>
+      <p>Manage complaints and users</p>
+    </div>
+   
+  </div>
+
+
+    
+
+  <!-- Summary Cards -->
+  <div class="summary-cards">
+    <div class="card">
+      <p>Total Complaints</p>
+      <h2 id="totalComplaints">0</h2>
+    </div>
+
+    <div class="card">
+      <p>Pending complaints</p>
+      <h2 id="pendingComplaints">0</h2>
+    </div>
+
+    <div class="card">
+      <p>In Progress</p>
+      <h2 id="inProgressComplaints">0</h2>
+    </div>
+
+    <div class="card">
+      <p>problem Completed</p>
+      <h2 id="completedComplaints">0</h2>
+    </div>
+  </div>
+
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="showSection('complaints')">Complaints</button>
+    <button class="tab active" onclick="showSection('users')">Users</button>
+    <button class="tab active" onclick="showSection('messages')">Contact Messages</button>
+  </div>
+
+  <!-- Complaints Section -->
+  <div id="complaintsSection" class="section active-section">
+    <div class="card">
+      <h3>All Complaints</h3>
+
+
+    </div>
+  </div>
+
+  <!-- Users Section -->
+<div id="usersSection" class="section">
+  <div class="card">
+    <h3>Registered Users</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="messagesSection" class="section">
+  <div class="card">
+    <h3>Contact Messages</h3>
+    <table>
+   <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Action</th>   
+  </tr>
+</thead>
+      <tbody id="messagesTable"></tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
+function showSection(section) {
+  const complaints = document.getElementById("complaintsSection");
+  const users = document.getElementById("usersSection");
+  const messages = document.getElementById("messagesSection");
+  const tabs = document.querySelectorAll(".tab");
+
+  complaints.classList.remove("active-section");
+  users.classList.remove("active-section");
+  messages.classList.remove("active-section");
+
+  tabs.forEach(tab => tab.classList.remove("active"));
+
+  if (section === "complaints") {
+    complaints.classList.add("active-section");
+    tabs[0].classList.add("active");
+  } else if (section === "users") {
+    users.classList.add("active-section");
+    tabs[1].classList.add("active");
+  } else {
+    messages.classList.add("active-section");
+    tabs[2].classList.add("active");
+  }
+}
+
+// 1️⃣ Show admin name
+fetch("/get-user")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("adminName").innerText = data.name;
+  })
+  .catch(() => window.location.href = "/login.html");
+
+// 2️⃣ Load complaints
+async function loadComplaints() {
+  try {
+    const res = await fetch("/api/complaints");
+    const complaints = await res.json();
+
+    const container = document.querySelector("#complaintsSection .card");
+    container.innerHTML = "";
+
+    if (complaints.length === 0) {
+      container.innerHTML += `<p>No complaints submitted yet.</p>`;
+      return;
+    }
+
+    complaints.forEach(c => {
+      container.innerHTML += `
+        <div class="complaint-item">
+          <div>
+            <h4>${c.title}</h4>
+            <p class="sub">${c.name}</p>
+            <p class="desc">${c.description}</p>
+          </div>
+          <span class="badge">${c.status}</span>
+
+          ${c.status.toLowerCase() !== 'completed' ? `
+          <button class="complete-btn" onclick="markCompleted(${c.id})">
+          Mark Completed
+          </button>
+          ` : ''}
+          
+          ${c.status.toLowerCase() === 'pending' ? `
+          <button onclick="assignComplaint(${c.id})">Assign</button>
+          ` : ''}
+
+          <button class="delete-btn" onclick="deleteComplaint(${c.id})">Delete</button>
+        </div>
+      `;
+    });
+
+    const total = complaints.length;
+    const pending = complaints.filter(c => c.status.toLowerCase() === "pending").length;
+    const inProgress = complaints.filter(c => c.status.toLowerCase() === "in progress").length;
+    const completed = complaints.filter(c => c.status.toLowerCase() === "completed").length;
+
+    document.getElementById("totalComplaints").innerText = total;
+    document.getElementById("pendingComplaints").innerText = pending;
+    document.getElementById("inProgressComplaints").innerText = inProgress;
+    document.getElementById("completedComplaints").innerText = completed;
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// 3️⃣ Load users
+async function loadUsers() {
+  try {
+    const res = await fetch("/api/users");
+    const users = await res.json();
+
+    const tbody = document.querySelector("#usersSection tbody");
+    tbody.innerHTML = "";
+
+    users.forEach(user => {
+      tbody.innerHTML += `
+        <tr>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>${user.role}</td>
+          <td>
+          <i class="fa-solid fa-trash"
+          onclick="deleteUser(${user.id})"
+          style="color:red; cursor:pointer; font-size:18px;">
+          </i>
+          </td>
+        </tr>
+      `;
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// 4️⃣ Load messages
+async function loadMessages() {
+  const res = await fetch("/api/contact-messages");
+  const data = await res.json();
+
+  const table = document.getElementById("messagesTable");
+  table.innerHTML = "";
+
+  data.forEach(msg => {
+    table.innerHTML += `
+      <tr>
+        <td>${msg.name}</td>
+        <td>${msg.email}</td>
+        <td>${msg.message}</td>
+        <td>${new Date(msg.created_at).toLocaleString()}</td>
+        <td>
+          <i class="fa-solid fa-trash"
+             onclick="deleteMessage(${msg.id})"
+             style="color:red; cursor:pointer;"></i>
+        </td>
+      </tr>
+    `;
+  });
+}
+
+// ✅ 🔥 FIXED: assign function (GLOBAL scope madhe)
+async function assignComplaint(complaintId) {
+  const res = await fetch("/api/maintenance-users");
+  const maintenanceUsers = await res.json();
+
+  if (maintenanceUsers.length === 0) {
+    alert("No maintenance users found ❌");
+    return;
+  }
+
+  let options = "";
+  maintenanceUsers.forEach(user => {
+    options += `${user.id} - ${user.name}\n`;
+  });
+
+  const selectedId = prompt("Enter Maintenance ID:\n" + options);
+  if (!selectedId) return;
+
+  const assignRes = await fetch(`/assign/${complaintId}/${selectedId}`, {
+    method: "PUT"
+  });
+
+  const data = await assignRes.json();
+  alert(data.message);
+
+  loadComplaints(); // refresh
+}
+
+// 5️⃣ Mark completed
+async function markCompleted(id) {
+  const res = await fetch(`/complete-complaint/${id}`, { method: "PUT" });
+  const data = await res.json();
+  alert(data.message);
+  loadComplaints();
+}
+
+// 6️⃣ Delete complaint
+async function deleteComplaint(id) {
+  if (!confirm("Are you sure?")) return;
+
+  const res = await fetch(`/delete-complaint/${id}`, { method: "DELETE" });
+  const data = await res.json();
+  alert(data.message);
+  loadComplaints();
+}
+
+// delete user
+async function deleteUser(id) {
+  if (!confirm("Delete user?")) return;
+
+  const res = await fetch(`/delete-user/${id}`, { method: "DELETE" });
+  const data = await res.json();
+  alert(data.message);
+  loadUsers();
+}
+
+// delete message
+async function deleteMessage(id) {
+  if (!confirm("Delete message?")) return;
+
+  const res = await fetch(`/delete-message/${id}`, { method: "DELETE" });
+  const data = await res.json();
+  alert(data.message);
+  loadMessages();
+}
+
+// init load
+loadMessages();
+loadComplaints();
+loadUsers();
+
+</script>
+
+</body>
+</html>
